@@ -149,6 +149,7 @@ class XPLInstance {
         $this->message = '';
         $string = socket_read($this->socket, 1500);
         if ($string != '') {
+            if (XPL_DEBUGLEVEL>=3) log::add('xpl', 'debug', 'Reading socket:' . $string);
             $message = XPLMessage::createMessageFromString($string);
             if ($message) {
                 if ($this->processMessage($message) == 1) {
@@ -156,6 +157,7 @@ class XPLInstance {
                     return 1;
                 }
             }
+            log::add('xpl', 'debug', 'Internal message has been processed');
             return 0;
         }
         $this->poll();
@@ -187,7 +189,7 @@ class XPLInstance {
                 ++$port;
             } else {
                 if (!$_sendOnCmd) {
-                    log::add('xpl', 'info', 'Bind succeded as client on: ' . $port);
+                    log::add('xpl', 'info', 'Bind succeded as client on: ' . $this->ip . ':' . $port);
                 }
                 return $port;
             }
@@ -308,6 +310,7 @@ class XPLInstance {
             //Message not for us
             return 0;
         }
+        log::add('xpl', 'debug', 'Receiving an XPL message:' . $message->messageSchemeIdentifier());
         if (!$this->handleMessage($message)) {
             return 1;
         }

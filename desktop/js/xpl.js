@@ -55,6 +55,7 @@ function addCmdToTable(_cmd) {
     selxPlschema += '<option value="lighting.device">lighting.device</option>';
 //    selxPlschema += '<option value="lighting.scene">lighting.scene</option>';
     selxPlschema += '<option value="teleinfo.basic">teleinfo.basic</option>';
+    selxPlschema += '<option value="security.gateway">security.gateway</option>';
     selxPlschema += '</select>';
 
     var typeXmdxPL = '<select class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="xPLtypeCmd" style="width : 150px;margin-top : 5px;">';

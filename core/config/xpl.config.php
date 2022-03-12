@@ -24,6 +24,7 @@ define('XPL_VENDOR', 'xpl');
 define('XPL_DEVICE', 'jeedom');
 define('XPL_INSTANCE', gethostname());
 define('XPL_IP', gethostbyname(gethostname()));
+define('XPL_DEBUGLEVEL', 1); // debug Level
 define('XPL_MAX_RETRY_CONNEXION_TO_HUB', '300');
 
 
@@ -187,5 +188,11 @@ $XPL_BODY = array(
                        iinst2=<Intensité instantanée phase 2>
                        iinst3=<Intensité instantanée phase 3>
     ),*/
+// Addition of security.gateway message
+    'security.gateway' => array(
+        'XPL-TRIG' => "device=<gateway name>",
+    ),
+
+
 );
 ?>

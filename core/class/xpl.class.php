@@ -60,15 +60,19 @@ class xpl extends eqLogic {
 	}
 
 	public static function deamon() {
+    //log::add('xpl', 'debug', '.');
 		$xplinstance = XPLInstance::getXPLInstance();
-		while (true) {
-			$eventReturn = $xplinstance->doEvents();
-			if ($eventReturn == 1) {
-				xPL::proccessMessageEvent($xplinstance->getMessage());
-			} else {
-				return;
-			}
-		}
+    while (true) {
+		  $eventReturn = $xplinstance->doEvents();
+		  if ($eventReturn == 1) {
+			  xPL::proccessMessageEvent($xplinstance->getMessage());
+		  } else if ($eventReturn == 0) { 
+          // Bug Correction, we should continue if there is an internal message in the queue; perhaps the next one is a good one
+          // Internal message 
+        } else {
+            return;
+          }
+    }
 	}
 
 	public static function newDeviceFromxPLNetwork($_logicalId) {
@@ -77,20 +81,20 @@ class xpl extends eqLogic {
 			$xPl->setIsEnable(1);
 			$xPl->save();
 		} else {
-			$xPl = new xpl();
-			$xPl->setName($_logicalId);
-			$xPl->setLogicalId($_logicalId);
-			$xPl->setObject_id(null);
-			$xPl->setEqType_name('xpl');
-			$xPl->setIsEnable(1);
-			$xPl->setIsVisible(1);
-			$xPl->save();
+			  $xPl = new xpl();
+			  $xPl->setName($_logicalId);
+			  $xPl->setLogicalId($_logicalId);
+			  $xPl->setObject_id(null);
+			  $xPl->setEqType_name('xpl');
+			  $xPl->setIsEnable(1);
+			  $xPl->setIsVisible(1);
+			  $xPl->save();
 		}
 	}
 
 	public static function removedDeviceFromxPLNetwork($_logicalId) {
 		$xPl = self::byLogicalId($_logicalId, 'xpl');
-		$xPl->setEnable(0);
+		$xPl->setIsEnable(0); // Bug correction
 	}
 
 	public static function proccessMessageEvent($_message = null) {
@@ -127,9 +131,18 @@ class xpl extends eqLogic {
 				require_once dirname(__FILE__) . '/../schema/lighting.device.class.php';
 				$list_event = lightingDevice::parserMessage($_message);
 				break;
-		    	case 'teleinfo.basic':
-		        	require_once dirname(__FILE__) . '/../schema/teleinfo.basic.class.php';
-		        	$list_event = teleinfoBasic::parserMessage($_message);
+		  case 'teleinfo.basic':
+		    require_once dirname(__FILE__) . '/../schema/teleinfo.basic.class.php';
+        if (XPL_DEBUGLEVEL>=2) log::add('xpl', 'debug', 'Parsing a message teleinfo.basic');
+		    $list_event = teleinfoBasic::parserMessage($_message);
+        break;
+// Adding security.gateway message
+      case 'security.gateway':
+        require_once dirname(__FILE__) . '/../schema/security.gateway.class.php';
+        if (XPL_DEBUGLEVEL>=2) log::add('xpl', 'debug', 'Parsing a message security.gateway');
+        $list_event = securityGateway::parserMessage($_message);
+        break;
+// End of Change
 			default:
 				break;
 		}
@@ -152,7 +165,17 @@ class xpl extends eqLogic {
 		if (is_array($list_event)) {
 			foreach ($list_event as $event) {
 				$cmd = xPLCmd::byId($event['cmd_id']);
-				$event['value'] = str_replace(array_keys($replace), array_values($replace), $event['value']);
+        // Bug correction 
+ 				//$event['value'] = str_replace(array_keys($replace), array_values($replace), $event['value']);
+        foreach ($replace as $key => $v) {
+          if (isset($event['value'])) {
+            if ($event['value'] == $key) {
+              $event['value'] = $v;
+              break;
+            }
+          }
+        }
+        // end of change
 				if ($cmd->getType() == 'info') {
 					cache::set('xpl' . $cmd->getId(), $event['value']);
 				}
@@ -270,4 +293,4 @@ class xPLCmd extends cmd {
 	/*     * **********************Getteur Setteur*************************** */
 }
 
-?>
+?> 
