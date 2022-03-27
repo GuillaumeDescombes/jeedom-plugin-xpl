@@ -148,36 +148,37 @@ $XPL_BODY = array(
     ),*/
     'teleinfo.basic' => array(
         'XPL-STAT' => "adco=<Adresse du compteur>
-                       optarif=<Option tarifaire>
-                       isousc=<Intensité souscrite>
-                       base=<Index option base>
-                       iinst=<Intensité instantanée>
-                       imax=<Intensité maximale appelée>
-                       motdetat=<Mot d'état du compteur>
-                       [hchc=<Heures|creuses>]
-                       [hchp=<Heures|pleines>]
-                       [ejphn=<Heures|normales>]
-                       [ejphpm=<Heures|de pointe>]
-                       [bbrhcjb=<Heures|creuses jours bleus>]
-                       [bbrhpjb=<Heures|pleines jours bleus>]
-                       [bbrhcjw=<Heures|creuses jours blancs>]
-                       [bbrhpjw=<Heures|pleines jours blancs>]
-                       [bbrhcjr=<Heures|creuses jours rouges>]
-                       [bbrhpjr=<Heures|pleines jours rouges>]
-                       [pejp=<Préavis|début EJP (30min)>]
-                       [ptec=<Période|tarifaire actuelle>]
-                       [demain=<Couleur|du lendemain>]
-                       [adps=<Avertissement|de dépassement>]
-                       [papp=<Puissance|apparente>]
-                       [hhphc=<Horaire|heure pleine/heure creuse>]
-                       [ppot=<Présence|des potentiels>]
-                       [iinst1=<Intensité|instantanée phase 1>]
-                       [iinst2=<Intensité|instantanée phase 2>]
-                       [iinst3=<Intensité|instantanée phase 3>]
-                       [imax1=<Intensité|maximale phase 1>]
-                       [imax2=<Intensité|maximale phase 2>]
-                       [imax3=<Intensité|maximale phase 3>]
-                       [pmax=<Puissance|maximale triphasée>]",
+                       request= ** one of the item below **
+                         optarif=<Option tarifaire>
+                         isousc=<Intensité souscrite>
+                         base=<Index option base>
+                         iinst=<Intensité instantanée>
+                         imax=<Intensité maximale appelée>
+                         motdetat=<Mot d'état du compteur>
+                         hchc=<Heures creuses>
+                         hchp=<Heures pleines>
+                         ejphn=<Heures normales>
+                         ejphpm=<Heures de pointe>
+                         bbrhcjb=<Heures creuses jours bleus>
+                         bbrhpjb=<Heures pleines jours bleus>
+                         bbrhcjw=<Heures creuses jours blancs>
+                         bbrhpjw=<Heures pleines jours blancs>
+                         bbrhcjr=<Heures creuses jours rouges>
+                         bbrhpjr=<Heures pleines jours rouges>
+                         pejp=<Préavis début EJP (30min)>
+                         ptec=<Période tarifaire actuelle>
+                         demain=<Couleur du lendemain>
+                         adps=<Avertissement de dépassement>
+                         papp=<Puissance apparente>
+                         hhphc=<Horaire heure pleine/here creuse>
+                         ppot=<Présence des potentiels>
+                         iinst1=<Intensité instantanée phase 1>
+                         iinst2=<Intensité instantanée phase 2>
+                         iinst3=<Intensité instantanée phase 3>
+                         imax1=<Intensité maximale phase 1>
+                         imax2=<Intensité maximale phase 2>
+                         imax3=<Intensité maximale phase 3>
+                         pmax=<Puissance maximale triphasée>",
     ),
 /*    'teleinfo.short' => array(
         'XPL-STAT' => "adir1=<Dépassement d'intensité sur la phase 1>
@@ -188,10 +189,161 @@ $XPL_BODY = array(
                        iinst2=<Intensité instantanée phase 2>
                        iinst3=<Intensité instantanée phase 3>
     ),*/
-// Addition of security.gateway message
-    'security.gateway' => array(
-        'XPL-TRIG' => "device=<gateway name>",
+// Addition of security messages
+    'security.gateinfo' => array(
+        'XPL-STAT' => "request= ** one of the item below **
+                        protocol=[X10|UPB|CBUS|ZWAVE|INSTEON]
+                        description=
+                        version=
+                        author=
+                        info-url=
+                        zone-count=#",
     ),
+    'security.zonelist' => array(
+        'XPL-STAT' => "request= ** one of the item below **
+                        zone-count=#
+                        zone-list=id,id,...,id",
+    ),
+    'security.arealist' => array(
+        'XPL-STAT' => "request= ** one of the item below **
+                        area-count=#
+                        area-list=id,id,...,id",
+    ),
+    'security.zoneinfo' => array(
+        'XPL-STAT' => "zone=<id>
+                       request= ** one of the item below **
+                      ",
+    ),
+    'security.areainfo' => array(
+        'XPL-STAT' => "area=<id>
+                       request= ** one of the item below **
+                      ",
+    ),
+    'security.gatestat' => array(
+        'XPL-STAT' => "request= ** one of the item below **
+                      ",
+    ),    
+    'security.zonestat' => array(
+        'XPL-STAT' => "zone=<id>
+                       request= ** one of the item below **
+                      ",
+    ),   
+    'security.areastat' => array(
+        'XPL-STAT' => "area=<id>
+                       request= ** one of the item below **
+                      ",
+    ),    
+    'security.gateway' => array(
+        'XPL-TRIG' => "type= ** one of the item below **
+                        event-id=<event #>
+                        event=<event name>
+                        zone=<zone #>
+                        zone-name=<zone name>
+                        zone-list=<zone list>
+                        user=<user #>
+                        user-name=<user name>",
+    ),
+    'security.zone' => array(
+        'XPL-TRIG' => "zone=<id>
+                       request= ** one of the item below **
+                      ",
+    ),   
+    'security.area' => array(
+        'XPL-TRIG' => "area=<id>
+                       request= ** one of the item below **
+                      ",
+    ),    
+    'security.basic' => array(
+        'XPL-CMD' => "command=
+                     ",
+    ), 
+    'security.request' => array(
+        'XPL-CMD' => "command=
+                     ",
+    ),     
+//addition of hvac messages
+    'hvac.gateinfo' => array(
+        'XPL-STAT' => "request= ** one of the item below **
+                        protocol=[X10|UPB|CBUS|ZWAVE|INSTEON]
+                        description=
+                        version=
+                        author=
+                        info-url=
+                        zone-count=#",
+    ),
+    'hvac.zonelist' => array(
+        'XPL-STAT' => "request= ** one of the item below **
+                        zone-count=#
+                        zone-list=id,id,...,id",
+    ),
+    'hvac.zoneinfo' => array(
+        'XPL-STAT' => "zone=<id>
+                       request= ** one of the item below **
+                        command-list=
+                        hvac-mode-list=
+                        fan-mode-list=
+                        timer-mode-list=
+                        setpoint-list=
+                        hvac-state-list=
+                        fan-state-list=
+                        boost-duration=true|false
+                        room=room name
+                        floor=floor name
+                        comment=comments",
+    ),
+    'hvac.runtime' => array(
+        'XPL-STAT' => "zone=<id>
+                       request= ** one of the item below **
+                         state=
+                         time=#",
+    ),
+    'hvac.fantime' => array(
+        'XPL-STAT' => "zone=<id>
+                       request= ** one of the item below **
+                        state=
+                        time=#",
+    ),
+    'hvac.gateway' => array(
+        'XPL-TRIG' => "request= ** one of the item below **
+                        event=ready|changed",
+    ),
+    'hvac.zone' => array(
+        'XPL-TRIG' => "zone=<id>
+                       request= ** one of the item below **
+                        hvac-mode=
+                        fan-mode=
+                        timer-mode=
+                        hvac-state=
+                        fan-state=
+                        temperature=#",
+    ),
+    'hvac.setpoint' => array(
+        'XPL-TRIG' => "zone=<id>
+                       request= ** one of the item below **
+                        setpoint=name
+                        temperature=#",
+    ),
+    'hvac.timer' => array(
+        'XPL-TRIG' => "zone=<id>
+                       request= ** one of the item below **
+                        timer=[SuMoTuWeThFrSa,hh:mm-hh:mm,hh:mm-hh:mm,...etc]",
+    ),
+    'hvac.basic' => array(
+        'XPL-CMD' => "command=hvac-mode|fan-mode|timer-mode|setpoint|timer|reset-runtime|reset-fantime
+                      zone=id
+                      [setpoint=name]
+                      [mode=]
+                      [state=]
+                      [temperature=#]
+                      [duration=#]",
+    ),
+    'hvac.request' => array(
+        'XPL-CMD' => "request=gateinfo|zonelist|zoneinfo|zone|setpoint|timer|runtime|fantime
+                      zone=id
+                      [setpoint=]
+                      [state=]",
+    ),
+    
 
 
 );

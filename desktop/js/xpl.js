@@ -55,7 +55,33 @@ function addCmdToTable(_cmd) {
     selxPlschema += '<option value="lighting.device">lighting.device</option>';
 //    selxPlschema += '<option value="lighting.scene">lighting.scene</option>';
     selxPlschema += '<option value="teleinfo.basic">teleinfo.basic</option>';
+    //adding security messages
+    selxPlschema += '<option value="security.basic">security.basic</option>';
+    selxPlschema += '<option value="security.request">security.request</option>';
+    selxPlschema += '<option value="security.gateinfo">security.gateinfo</option>';
+    selxPlschema += '<option value="security.zonelist">security.zonelist</option>';
+    selxPlschema += '<option value="security.arealist">security.arealist</option>';    
+    selxPlschema += '<option value="security.zoneinfo">security.zoneinfo</option>';
+    selxPlschema += '<option value="security.areainfo">security.areainfo</option>';
+    selxPlschema += '<option value="security.gatestat">security.gatestat</option>';
+    selxPlschema += '<option value="security.zonestat">security.zonestat</option>';
+    selxPlschema += '<option value="security.areastat">security.areastat</option>';
     selxPlschema += '<option value="security.gateway">security.gateway</option>';
+    selxPlschema += '<option value="security.zone">security.zone</option>';
+    selxPlschema += '<option value="security.area">security.area</option>';
+    //adding hvac messages
+    selxPlschema += '<option value="hvac.basic">hvac.basic</option>';
+    selxPlschema += '<option value="hvac.request">hvac.request</option>';
+    selxPlschema += '<option value="hvac.gateinfo">hvac.gateinfo</option>';
+    selxPlschema += '<option value="hvac.zonelist">hvac.zonelist</option>';
+    selxPlschema += '<option value="hvac.zoneinfo">hvac.zoneinfo</option>';
+    selxPlschema += '<option value="hvac.runtime">hvac.runtime</option>';
+    selxPlschema += '<option value="hvac.fantime">hvac.fantime</option>';
+    selxPlschema += '<option value="hvac.gateway">hvac.gateway</option>';
+    selxPlschema += '<option value="hvac.zone">hvac.zone</option>';
+    selxPlschema += '<option value="hvac.setpoint">hvac.setpoint</option>';
+    selxPlschema += '<option value="hvac.timer">hvac.timer</option>';
+    
     selxPlschema += '</select>';
 
     var typeXmdxPL = '<select class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="xPLtypeCmd" style="width : 150px;margin-top : 5px;">';

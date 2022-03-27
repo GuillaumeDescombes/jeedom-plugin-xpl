@@ -65,7 +65,7 @@ class xpl extends eqLogic {
     while (true) {
 		  $eventReturn = $xplinstance->doEvents();
 		  if ($eventReturn == 1) {
-			  xPL::proccessMessageEvent($xplinstance->getMessage());
+			  xPL::processMessageEvent($xplinstance->getMessage());
 		  } else if ($eventReturn == 0) { 
           // Bug Correction, we should continue if there is an internal message in the queue; perhaps the next one is a good one
           // Internal message 
@@ -97,7 +97,7 @@ class xpl extends eqLogic {
 		$xPl->setIsEnable(0); // Bug correction
 	}
 
-	public static function proccessMessageEvent($_message = null) {
+	public static function processMessageEvent($_message = null) {
 		switch ($_message->messageSchemeIdentifier()) {
 			case 'sensor.basic':
 				require_once dirname(__FILE__) . '/../schema/sensor.basic.class.php';
@@ -136,13 +136,38 @@ class xpl extends eqLogic {
         if (XPL_DEBUGLEVEL>=2) log::add('xpl', 'debug', 'Parsing a message teleinfo.basic');
 		    $list_event = teleinfoBasic::parserMessage($_message);
         break;
-// Adding security.gateway message
+// Adding security messages
+      case 'security.gateinfo':
+      case 'security.zonelist':
+      case 'security.zoneinfo':
+      case 'security.areainfo':
+      case 'security.gatestat':
+      case 'security.zonestat':
+      case 'security.areastat':
       case 'security.gateway':
-        require_once dirname(__FILE__) . '/../schema/security.gateway.class.php';
-        if (XPL_DEBUGLEVEL>=2) log::add('xpl', 'debug', 'Parsing a message security.gateway');
-        $list_event = securityGateway::parserMessage($_message);
+      case 'security.zone':
+      case 'security.area':
+        require_once dirname(__FILE__) . '/../schema/security.class.php';
+        if (XPL_DEBUGLEVEL>=2) log::add('xpl', 'debug', "Parsing a message '" . $_message->messageSchemeIdentifier() . "'");
+        $list_event = security::parserMessage($_message);
         break;
-// End of Change
+// Adding hvac messages
+      case 'hvac.basic':
+      case 'hvac.request':
+      case 'hvac.gateinfo':
+      case 'hvac.zonelist':
+      case 'hvac.zoneinfo':
+      case 'hvac.runtime':
+      case 'hvac.fantime':
+      case 'hvac.gateway':
+      case 'hvac.zone':
+      case 'hvac.setpoint':
+      case 'hvac.timer':
+        require_once dirname(__FILE__) . '/../schema/hvac.class.php';
+        log::add('xpl', 'debug', "Parsing a message '" . $_message->messageSchemeIdentifier() . "'");
+        $list_event = hvac::parserMessage($_message);
+        break;
+
 			default:
 				break;
 		}
