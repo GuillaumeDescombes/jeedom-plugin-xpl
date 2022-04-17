@@ -5,7 +5,7 @@ if (!isConnect('admin')) {
 
 include_file('core', 'xpl', 'config', 'xpl');
 include_file('core', 'xpl', 'class', 'xpl');
-
+ 
 sendVarToJS('eqType', 'xpl');
 $eqLogics = eqLogic::byType('xpl');
 ?>

@@ -93,12 +93,15 @@ function addCmdToTable(_cmd) {
     var tr = '<tr class="cmd" data-cmd_id="' + init(_cmd.id) + '">';
     tr += '<td>';
     tr += '<input class="cmdAttr form-control input-sm" data-l1key="id" style="display : none;">';
+    tr += '<a class="cmdAction btn btn-default btn-sm" data-l1key="chooseIcon"><i class="fas fa-flag"></i> Icone</a>';
     tr += '<input class="cmdAttr form-control input-sm" data-l1key="name" value="' + init(_cmd.name) + '"></td>';
     tr += '<td>';
-    tr += '<span class="type" type="' + init(jeedom.cmd.type) + '">' + jeedom.cmd.availableType() + '</span>';
+    tr += '<span class="type" type="' + init(_cmd.type) + '">' + jeedom.cmd.availableType() + '</span>';
     tr += '<span class="subType" subType="' + init(_cmd.subType) + '"></span>';
     tr += '</td>';
-    tr += '<td>' + selxPlschema + typeXmdxPL + '</td>';
+    tr += '<td>';
+    tr +=    selxPlschema + typeXmdxPL;
+    tr += '</td>';
     tr += '<td class="xPLbody">';
     tr += '<textarea style="height : 100px;" class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="xPLbody"></textarea>';
     tr += '</td>';
@@ -118,6 +121,10 @@ function addCmdToTable(_cmd) {
     tr += '</tr>';
     $('#table_cmd tbody').append(tr);
     $('#table_cmd tbody tr:last').setValues(_cmd, '.cmdAttr');
+    if (isset(_cmd.type)) {
+        $('#table_cmd tbody tr:last .cmdAttr[data-l1key=type]').value(init(_cmd.type));
+    }
+    jeedom.cmd.changeType($('#table_cmd tbody tr:last'), init(_cmd.subType));
 }
 
 function changexPLTypeCmd(_el, _xPLbody) {
