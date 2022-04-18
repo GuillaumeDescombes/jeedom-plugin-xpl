@@ -121,13 +121,12 @@ foreach (jeedom::getConfiguration('eqLogic:category') as $key => $value) {
             <table id="table_cmd" class="table table-bordered table-condensed">
                 <thead>
                     <tr>
-                        <th style="width: 150px;">{{Nom}}</th>
-                        <th style="width: 110px;">{{Type}}</th>
+                        <th style="width: 300px;">{{Nom}}</th>
+                        <th style="width: 150px;">{{Type}}</th>
                         <th style="width: 150px;">{{Schéma}}</th>
                         <th>{{Body}}</th>
-                        <th style="width: 200px;">{{Paramètres}}</th>
-                        <th style="width: 100px;">{{Unité}}</th>
-                        <th style="width: 100px;"></th>
+                        <th style="width: 300px;">{{Options}}</th>
+                        <th style="width: 150px;">{{Action}}</th>
                     </tr>
                 </thead>
                 <tbody>
