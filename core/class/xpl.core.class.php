@@ -109,7 +109,7 @@ class XPLInstance {
     private $ip;
     private $message;
     private $retryConnectToHub = 0;
-    private static $sharedInstance;
+    private static $sharedInstance = null;
 
     /*     * ********Static******************* */
 
@@ -120,9 +120,10 @@ class XPLInstance {
     }
 
     public static function getXPLInstance($_sendOnCmd = false) {
-        if (!isset(self::$sharedInstance)) {
-            self::$sharedInstance = new self($_sendOnCmd);
-        }
+        if (is_null(self::$sharedInstance)) {
+            log::add('xpl', 'info', 'Create new XPLInstance('. ($_sendOnCmd?'true':'false') .')');
+            self::$sharedInstance = new XPLInstance($_sendOnCmd);
+        } 
         return self::$sharedInstance;
     }
 
@@ -317,7 +318,6 @@ class XPLInstance {
     }
 
     private function sendHeartbeat() {
-        //echo "Sending heartbeat\n";
         $message = new xPLMessage(xPLMessage::xplstat);
         $message->setMessageSchemeIdentifier('hbeat.app');
         $message->setTarget('*');

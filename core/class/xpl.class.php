@@ -235,7 +235,8 @@ class xPLCmd extends cmd {
 	}
 
 	public function execute($_options = null) {
-		$xPLinstance = XPLInstance::getXPLInstance(false);
+    //Bug correction: true
+		$xPLinstance = XPLInstance::getXPLInstance(true);
 		$source = $xPLinstance->getThisDevice()->deviceName();
 		$_target = $this->getEqLogic()->getLogicalId();
 		if (trim($_target) == '') {
