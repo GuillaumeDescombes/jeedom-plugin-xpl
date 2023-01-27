@@ -116,7 +116,6 @@ function addCmdToTable(_cmd) {
     tr += '<td class="xPLbody">';
     tr += '<textarea style="height : 100px;" class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="xPLbody"></textarea>';
     tr += '</td>';
-    
     tr += '<td>';
     tr += '<input class="tooltips cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="minValue"  placeholder="{{Min}}" title="{{Min}}" style="width:30%;display:inline-block;">';
     tr += '<input class="tooltips cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="maxValue" placeholder="{{Max}}" title="{{Max}}" style="width:30%;display:inline-block;">';
@@ -126,7 +125,9 @@ function addCmdToTable(_cmd) {
     tr += '<span><label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isHistorized" checked/>{{Historiser}}</label></span> ';
     tr += '<span><label class="checkbox-inline"><input type="checkbox" class="cmdAttr" data-l1key="display" data-l2key="invertBinary"/>{{Inverser}}</label></span> ';  
     tr += '</td>';
-    
+    tr += '<td>';
+    tr += '<span class="cmdAttr" data-l1key="htmlstate"></span>'; 
+    tr += '</td>';     
     tr += '<td>';
     if (is_numeric(_cmd.id)) {
         tr += '<a class="btn btn-default btn-xs cmdAction expertModeVisible" data-action="configure"><i class="fa fa-cogs"></i></a> ';
