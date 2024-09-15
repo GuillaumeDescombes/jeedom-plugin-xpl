@@ -21,6 +21,8 @@ require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
 include_file('core', 'xpl', 'class', 'xpl');
 include_file('core', 'xpl', 'config', 'xpl');
 
+// XPL DEAMON
+
 class xPLDevice {
     /*     * ********Attributs******************* */
 
@@ -121,7 +123,7 @@ class XPLInstance {
 
     public static function getXPLInstance($_sendOnCmd = false) {
         if (is_null(self::$sharedInstance)) {
-            log::add('xpl', 'info', 'Create new XPLInstance('. ($_sendOnCmd?'true':'false') .')');
+            log::add('xpl', 'info', 'DAEMON: Create new XPLInstance('. ($_sendOnCmd?'true':'false') .')');
             self::$sharedInstance = new XPLInstance($_sendOnCmd);
         } 
         return self::$sharedInstance;
@@ -150,7 +152,7 @@ class XPLInstance {
         $this->message = '';
         $string = socket_read($this->socket, 1500);
         if ($string != '') {
-            if (XPL_DEBUGLEVEL>=3) log::add('xpl', 'debug', 'Reading socket:' . $string);
+            if (XPL_DEBUGLEVEL>=3) log::add('xpl', 'debug', 'DAEMON: Reading socket:' . $string);
             $message = XPLMessage::createMessageFromString($string);
             if ($message) {
                 if ($this->processMessage($message) == 1) {
@@ -158,7 +160,7 @@ class XPLInstance {
                     return 1;
                 }
             }
-            log::add('xpl', 'debug', 'Internal message has been processed');
+            log::add('xpl', 'debug', 'DAEMON: Internal message has been processed');
             return 0;
         }
         $this->poll();
@@ -190,7 +192,7 @@ class XPLInstance {
                 ++$port;
             } else {
                 if (!$_sendOnCmd) {
-                    log::add('xpl', 'info', 'Bind succeded as client on: ' . $this->ip . ':' . $port);
+                    log::add('xpl', 'info', 'DAEMON: Bind succeded as client on: ' . $this->ip . ':' . $port);
                 }
                 return $port;
             }
@@ -201,7 +203,7 @@ class XPLInstance {
     private function init($_sendOnCmd = false) {
         if (($this->socket = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP)) === false) {
             if (!$_sendOnCmd) {
-                log::add('xpl', 'error', 'socket_create() failed: reason: ' . socket_strerror(socket_last_error()));
+                log::add('xpl', 'error', 'DAEMON: socket_create() failed: reason: ' . socket_strerror(socket_last_error()));
             }
             return;
         }
@@ -210,12 +212,12 @@ class XPLInstance {
 
         $this->thisDevice->setPort($this->bindToPort($_sendOnCmd));
         if ($this->thisDevice->port() == 0) {
-            log::add('xpl', 'error', "socket_bind() failed: reason: " . socket_strerror(socket_last_error($this->socket)));
+            log::add('xpl', 'error', "DAEMON: socket_bind() failed: reason: " . socket_strerror(socket_last_error($this->socket)));
             return;
         }
 
         if (!$_sendOnCmd) {
-            log::add('xpl', 'info', 'xPL server started (bound to port : ' . $this->thisDevice->port() . ')');
+            log::add('xpl', 'info', 'DAEMON: xPL server started (bound to port : ' . $this->thisDevice->port() . ')');
             $this->sendHeartbeat();
         }
     }
@@ -225,7 +227,7 @@ class XPLInstance {
             $this->sendHeartbeat();
             $this->retryConnectToHub++;
             if ($this->retryConnectToHub > XPL_MAX_RETRY_CONNEXION_TO_HUB) {
-                log::add('xpl', 'error', 'xPL Hub non trouvé, veuillez le redemarrer','xplHubNotFound');
+                log::add('xpl', 'error', 'DAEMON: xPL Hub non trouvé, veuillez le redemarrer','xplHubNotFound');
                 $cron = cron::byClassAndFunction('xpl', 'deamon');
                 if (is_object($cron)) {
                     $cron->setEnable(0);
@@ -243,7 +245,7 @@ class XPLInstance {
         //Loop all devices to see if they have timed out
         foreach ($this->devices as $key => $device) {
             if (time() - $device->lastHeartBeat() >= $device->heartBeatInterval() * 60 * 2) {
-                log::add('xpl', 'info', 'Device removed (timeout) : ' . $device->deviceName());
+                log::add('xpl', 'info', 'DAEMON: Device removed (timeout) : ' . $device->deviceName());
                 //This is not a prefeered way of removing the item from an array
                 //Since we are iterating the loop will miss to check the new item.
                 //Here, it will be checked next time poll is called
@@ -262,7 +264,7 @@ class XPLInstance {
         foreach ($this->devices as $key => $device) {
             if ($device->deviceName() == $message->source()) {
                 if (substr($message->messageSchemeIdentifier(), -3) == 'end') {
-                    log::add('xpl', 'info', 'Device removed: ' . $message->source());
+                    log::add('xpl', 'info', 'DAEMON: Device removed: ' . $message->source());
                     unset($this->devices[$key]);
                     xPL::removedDeviceFromxPLNetwork($device->deviceName());
                     return true;
@@ -311,7 +313,7 @@ class XPLInstance {
             //Message not for us
             return 0;
         }
-        log::add('xpl', 'debug', 'Receiving an XPL message:' . $message->messageSchemeIdentifier());
+        log::add('xpl', 'debug', 'DAEMON: Receiving an XPL message:' . $message->messageSchemeIdentifier());
         if (!$this->handleMessage($message)) {
             return 1;
         }
@@ -334,7 +336,7 @@ class XPLInstance {
     private function setAttached($attached) {
         $this->isAttached = $attached;
         if ($this->isAttached) {
-            log::add('xpl', 'info', 'Attached to xPL-network');
+            log::add('xpl', 'info', 'DAEMON: Attached to xPL-network');
             $message = new xPLMessage(xPLMessage::xplcmnd);
             $message->setTarget("*");
             $message->setSource($this->thisDevice->deviceName());

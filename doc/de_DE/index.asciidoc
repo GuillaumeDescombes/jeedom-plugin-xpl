@@ -1,6 +1,0 @@
-= XPL
-Das Plugin ermöglicht es, das Jeedom mit einem xPL-Netzwerk chatten kann.
-
-'''
-== Konfiguration
-include::configuration.asciidoc[]

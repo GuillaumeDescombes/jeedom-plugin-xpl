@@ -1,6 +1,0 @@
-= XPL
-Plugin permettant à Jeedom de discuter avec un reseaux xPL
-
-'''
-== Configuración
-include::configuration.asciidoc[]

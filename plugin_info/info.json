@@ -3,31 +3,22 @@
     "name": "xPL",
     "description": {
         "fr_FR": "Plugin pour gerer des équipements xPL",
-        "en_US": "Plugin to manage xPL equipment",
-        "es_ES": "Complemento para administrar equipos xPL",
-        "de_DE": "Plugin zur Verwaltung von xPL-Geräten",
-        "pt_PT": "Plug-in para gerenciar equipamentos xPL"
+        "en_US": "Plugin to manage xPL equipment"
     },
     "licence": "AGPL",
     "author": "Loïc",
-    "require": "3.0",
+    "require": "4.4",
     "category": "automation protocol",
     "hasOwnDeamon": true,
     "hasDependency": false,
-    "changelog": "https:\/\/github.com\/jeedom\/plugin-xpl\/blob\/stable\/doc\/#language#\/changelog.asciidoc",
-    "documentation": "https:\/\/github.com\/jeedom\/plugin-xpl\/blob\/stable\/doc\/#language#\/index.asciidoc",
+    "changelog": "",
+    "documentation": "https:\/\/doc.jeedom.com\/#language#\/",
     "language": [
         "fr_FR",
-        "en_US",
-        "es_ES",
-        "de_DE",
-        "pt_PT"
+        "en_US"
     ],
     "compatibility": [
-        "miniplus",
-        "smart",
         "rpi",
-        "docker",
         "diy",
         "mobile",
         "v4"
